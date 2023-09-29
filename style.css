@@ -1,0 +1,31 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid {
+    width: 512px;
+    height: 512px;
+    display: flex;
+    flex-direction: column;
+    border: 1px black solid;
+}
+
+.grid:hover {
+    cursor: pointer;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+.column {
+    width: 8px;
+    height: 8px;
+}
+
+.column:hover {
+    background-color: red;
+}
