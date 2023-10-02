@@ -2,6 +2,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .grid {
@@ -22,8 +23,8 @@ body {
 }
 
 .column {
-    width: 8px;
-    height: 8px;
+    width: 64px;
+    height: 64px;
 }
 
 .column:hover {
