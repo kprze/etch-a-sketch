@@ -14,7 +14,7 @@ drawSlider();
 getSliderValue();
 
 function drawGrid(pixelSize){
-    gridContainer.innerHTML = '';
+    gridContainer.textContent = '';
 
     const grid = gridContainer.appendChild(document.createElement('div'));
     grid.className = 'grid';
@@ -37,7 +37,9 @@ function drawGrid(pixelSize){
         column.style.width = `${columnSize}px`;
         column.style.height = `${columnSize}px`;
     });
+
     draw();
+    
 };
 
 function drawSlider(){                       
@@ -46,15 +48,14 @@ function drawSlider(){
     slider.type = 'range';
     slider.setAttribute('min','1');
     slider.setAttribute('max','6');
-    slider.setAttribute('value','6')
+    slider.setAttribute('value','1')
     slider.addEventListener('input', getSliderValue);
-}
+};
 
 function draw(){
     const column = document.querySelectorAll('.column');
     column.forEach((column => {
         column.addEventListener('click', () => {
-            console.log('click')
             column.style.background = 'red';
         });
     }));
@@ -63,11 +64,10 @@ function draw(){
 function getSliderValue(){
     const slider = document.querySelector('.slider');
     let resolutionValue = resolution[slider.value];
-    console.log(parseInt(resolutionValue))
     setResolution(parseInt(resolutionValue));
 };
 
 function setResolution(sliderValue){
     let result = 512/sliderValue;
     drawGrid(result);
-}
+};
