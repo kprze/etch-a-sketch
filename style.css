@@ -3,6 +3,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background-color: rgba(175, 255, 231, 0.966);
 }
 
 .grid {
@@ -13,22 +14,16 @@ body {
     border: 1px black solid;
 }
 
-.grid:hover {
-    cursor: pointer;
-}
-
 .row {
     display: flex;
     justify-content: center;
 }
 
 .column {
+    background-color: white;
     width: 256px;
     height: 256px;
-}
-
-.column:hover {
-    background-color: red;
+    user-select: none;
 }
 
 .sliderContainer {
@@ -36,4 +31,9 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+.mainContainer {
+    display: flex;
+    align-items: center;
 }

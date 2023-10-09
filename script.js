@@ -1,23 +1,26 @@
-let resolution = {
-    6:8,
-    5:16,
-    4:32,
-    3:64,
+let resolution = { // Resolution key values to be used in slider input
+    1:256,
     2:128,
-    1:256
+    3:64,
+    4:32,
+    5:16,
+    6:8
 };
 
 const gridContainer = document.querySelector('.gridContainer');
 const sliderContainer = document.querySelector('.sliderContainer');
+const settingsContainer = document.querySelector('.settingsContainer');
 
 drawSlider();
-
+colorSelector()
 let sliderText = sliderContainer.appendChild(document.createElement('p'));
 sliderText.className = 'sliderText';
 getSliderValue();
 
+let activeColor = getColorValue();
+
 function drawGrid(pixelSize){
-    gridContainer.textContent = '';
+    gridContainer.textContent = ''; // Clear div to draw an empty grid
 
     const grid = gridContainer.appendChild(document.createElement('div'));
     grid.className = 'grid';
@@ -43,10 +46,9 @@ function drawGrid(pixelSize){
 
     sliderText.textContent = '';
     draw();
-    
 };
 
-function drawSlider(){                       
+function drawSlider(){                  
     const slider = sliderContainer.appendChild(document.createElement('input'));
     slider.className = 'slider';
     slider.type = 'range';
@@ -58,12 +60,50 @@ function drawSlider(){
 
 function draw(){
     const column = document.querySelectorAll('.column');
-    column.forEach((column => {
-        column.addEventListener('click', () => {
-            column.style.background = 'red';
+    let isMouseDown = false;
+
+    // Add mousedown event listener to start tracking
+    document.addEventListener("mousedown", () => {
+        isMouseDown = true;
+    });
+
+    // Add mouseup event listener to stop tracking
+    document.addEventListener("mouseup", () => {
+        isMouseDown = false;
+    });
+
+    column.forEach((column) => {
+        column.addEventListener("mousemove", () => {
+            if (isMouseDown) {
+                column.style.background = activeColor;
+            }
         });
-    }));
+
+        // Also, retain the click event to paint when clicked
+        column.addEventListener("click", () => {
+            column.style.background = activeColor;
+        });
+    });
 };
+
+function setResolution(sliderValue){
+    let result = 512/sliderValue;
+    drawGrid(result); // Draw the grid based on the resolution value
+};
+
+function colorSelector(){
+    const colorSelect = settingsContainer.appendChild(document.createElement('input'));
+    colorSelect.className = 'colorSelect';
+    colorSelect.type = 'color';
+    colorSelect.addEventListener('input', () => {
+        activeColor = getColorValue();
+    });
+}
+
+function getColorValue(){
+    let color = document.querySelector('.colorSelect');
+    return color.value;
+}
 
 function getSliderValue(){
     const slider = document.querySelector('.slider');
@@ -72,7 +112,4 @@ function getSliderValue(){
     sliderText.textContent = `${512/resolutionValue} x ${512/resolutionValue}`;
 };
 
-function setResolution(sliderValue){
-    let result = 512/sliderValue;
-    drawGrid(result);
-};
+draw();
