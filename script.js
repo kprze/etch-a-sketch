@@ -111,5 +111,3 @@ function getSliderValue(){
     setResolution(parseInt(resolutionValue));
     sliderText.textContent = `${512/resolutionValue} x ${512/resolutionValue}`;
 };
-
-draw();
