@@ -12,12 +12,15 @@ const sliderContainer = document.querySelector('.sliderContainer');
 const settingsContainer = document.querySelector('.settingsContainer');
 
 drawSlider();
-colorSelector()
+colorSelector();
+drawRainbowButton();
 let sliderText = sliderContainer.appendChild(document.createElement('p'));
 sliderText.className = 'sliderText';
 getSliderValue();
+getRainbowButtonStatus();
 
 let activeColor = getColorValue();
+let rainbowButtonStatus = false;
 
 function drawGrid(pixelSize){
     gridContainer.textContent = ''; // Clear div to draw an empty grid
@@ -50,12 +53,19 @@ function drawGrid(pixelSize){
 
 function drawSlider(){                  
     const slider = sliderContainer.appendChild(document.createElement('input'));
-    slider.className = 'slider';
     slider.type = 'range';
+    slider.className = 'slider';
     slider.setAttribute('min','1');
     slider.setAttribute('max','6');
     slider.setAttribute('value','3')
     slider.addEventListener('input', getSliderValue);
+};
+
+function drawRainbowButton(){
+    const rainbowButton = settingsContainer.appendChild(document.createElement('input'));
+    rainbowButton.className = 'rainbowColor';
+    rainbowButton.type = 'button'; 
+    rainbowButton.value = 'Rainbow Mode';
 };
 
 function draw(){
@@ -73,15 +83,23 @@ function draw(){
     });
 
     column.forEach((column) => {
-        column.addEventListener("mousemove", () => {
-            if (isMouseDown) {
+        column.addEventListener("mouseover", () => {
+            if (isMouseDown && rainbowButtonStatus) {
+                column.style.background = randomColor();
+            }
+            else if (isMouseDown) {
                 column.style.background = activeColor;
             }
         });
 
         // Also, retain the click event to paint when clicked
         column.addEventListener("click", () => {
-            column.style.background = activeColor;
+            if (rainbowButtonStatus){
+                column.style.background = randomColor()
+            }
+            else {
+                column.style.background = activeColor;
+            }
         });
     });
 };
@@ -96,6 +114,7 @@ function colorSelector(){
     colorSelect.className = 'colorSelect';
     colorSelect.type = 'color';
     colorSelect.addEventListener('input', () => {
+        rainbowButtonStatus = false;
         activeColor = getColorValue();
     });
 }
@@ -110,4 +129,16 @@ function getSliderValue(){
     let resolutionValue = resolution[slider.value];
     setResolution(parseInt(resolutionValue));
     sliderText.textContent = `${512/resolutionValue} x ${512/resolutionValue}`;
+};
+
+function randomColor(){
+  const randomColor = Math.floor(Math.random()*16777215).toString(16);
+  return ("#" + randomColor);
+}
+
+function getRainbowButtonStatus(){
+    const rainbowButton = document.querySelector('.rainbowColor');
+    rainbowButton.addEventListener("click", () => {
+        rainbowButtonStatus = true;
+    })
 };
