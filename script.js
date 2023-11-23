@@ -7,19 +7,34 @@ let resolution = { // Resolution key values to be used in slider input
     6:8
 };
 
+const hexTransparencies = {
+    100: 'FF',
+    90: 'E6',
+    80: 'CC',
+    70: 'B3',
+    60: '99',   
+    50: '80',    
+    40: '66',    
+    30: '4D',    
+    20: '33',    
+    10: '1A',
+    }
+
 const gridContainer = document.querySelector('.gridContainer');
-const sliderContainer = document.querySelector('.sliderContainer');
+const sliderColorContainer = document.querySelector('.sliderColorContainer');
+const sliderOpacityContainer = document.querySelector('.sliderOpacityContainer');
 const settingsContainer = document.querySelector('.settingsContainer');
 
 drawSlider();
+opacitySlider();
 colorSelector();
 drawRainbowButton();
-let sliderText = sliderContainer.appendChild(document.createElement('p'));
-sliderText.className = 'sliderText';
-getSliderValue();
+let sliderColorText = sliderColorContainer.appendChild(document.createElement('p'));
+sliderColorText.className = 'sliderText';
+getSliderResValue();
 getRainbowButtonStatus();
 
-let activeColor = getColorValue();
+let activeColor = '#000000';
 let rainbowButtonStatus = false;
 
 function drawGrid(pixelSize){
@@ -47,19 +62,30 @@ function drawGrid(pixelSize){
         column.style.height = `${columnSize}px`;
     });
 
-    sliderText.textContent = '';
+    sliderColorText.textContent = '';
     draw();
 };
 
 function drawSlider(){                  
-    const slider = sliderContainer.appendChild(document.createElement('input'));
+    const slider = sliderColorContainer.appendChild(document.createElement('input'));
     slider.type = 'range';
-    slider.className = 'slider';
+    slider.className = 'sliderColor';
     slider.setAttribute('min','1');
     slider.setAttribute('max','6');
     slider.setAttribute('value','3')
-    slider.addEventListener('input', getSliderValue);
+    slider.addEventListener('input', getSliderResValue);
 };
+
+function opacitySlider() {
+    const slider = sliderOpacityContainer.appendChild(document.createElement('input'));
+    slider.type = 'range';
+    slider.className = 'sliderOpacity';
+    slider.setAttribute('min','10');
+    slider.setAttribute('max','100');
+    slider.setAttribute('value','100');
+    slider.setAttribute('step','10');
+    slider.addEventListener('input', getSliderColValue);
+}
 
 function drawRainbowButton(){
     const rainbowButton = settingsContainer.appendChild(document.createElement('input'));
@@ -82,6 +108,8 @@ function draw(){
         isMouseDown = false;
     });
 
+    let opacity = getSliderColValue();
+
     column.forEach((column) => {
         column.addEventListener("mouseover", () => {
             if (isMouseDown && rainbowButtonStatus) {
@@ -89,6 +117,7 @@ function draw(){
             }
             else if (isMouseDown) {
                 column.style.background = activeColor;
+                console.log(activeColor);
             }
         });
 
@@ -115,26 +144,27 @@ function colorSelector(){
     colorSelect.type = 'color';
     colorSelect.addEventListener('input', () => {
         rainbowButtonStatus = false;
-        activeColor = getColorValue();
+        activeColor = colorSelect.value;
     });
-}
+};
 
-function getColorValue(){
-    let color = document.querySelector('.colorSelect');
-    return color.value;
-}
-
-function getSliderValue(){
-    const slider = document.querySelector('.slider');
+function getSliderResValue(){
+    const slider = document.querySelector('.sliderColor');
     let resolutionValue = resolution[slider.value];
     setResolution(parseInt(resolutionValue));
-    sliderText.textContent = `${512/resolutionValue} x ${512/resolutionValue}`;
+    sliderColorText.textContent = `${512/resolutionValue} x ${512/resolutionValue}`;
+};
+
+function getSliderColValue(){
+    let slider = document.querySelector('.sliderOpacity');
+    let opacityValue = hexTransparencies[slider.value];
+    return opacityValue;
 };
 
 function randomColor(){
-  const randomColor = Math.floor(Math.random()*16777215).toString(16);
-  return ("#" + randomColor);
-}
+    const randomColor = Math.floor(Math.random()*16777215).toString(16);
+    return ("#" + randomColor);
+};
 
 function getRainbowButtonStatus(){
     const rainbowButton = document.querySelector('.rainbowColor');
