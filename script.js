@@ -14,17 +14,24 @@ const settingsContainer = document.querySelector('.settingsContainer');
 
 drawSlider();
 colorSelector();
+
 drawRainbowButton();
 drawClearButton();
+drawEraserButton();
+
 let sliderColorText = sliderColorContainer.appendChild(document.createElement('p'));
 sliderColorText.className = 'sliderText';
+
 getSliderResValue();
 getRainbowButtonStatus();
+getEraserButtonStatus();
+
+clearButton();
 
 let activeColor = hexToRgb('#000000');
 let activeRainbowColor = '';
 let rainbowButtonStatus = false;
-let clearButtonStatus = false;
+let eraserButtonStatus = false;
 
 
 function drawGrid(pixelSize){
@@ -62,7 +69,7 @@ function drawSlider(){
     slider.className = 'sliderColor';
     slider.setAttribute('min','1');
     slider.setAttribute('max','6');
-    slider.setAttribute('value','3')
+    slider.setAttribute('value','6')
     slider.addEventListener('input', getSliderResValue);
 };
 
@@ -74,10 +81,17 @@ function drawRainbowButton(){
 };
 
 function drawClearButton(){
-    const rainbowButton = settingsContainer.appendChild(document.createElement('input'));
-    rainbowButton.className = 'clearGrid';
-    rainbowButton.type = 'button'; 
-    rainbowButton.value = 'Clear';
+    const clearButton = settingsContainer.appendChild(document.createElement('input'));
+    clearButton.className = 'clearGrid';
+    clearButton.type = 'button'; 
+    clearButton.value = 'Clear';
+};
+
+function drawEraserButton(){
+    const eraserButton = settingsContainer.appendChild(document.createElement('input'));
+    eraserButton.className = 'eraser';
+    eraserButton.type = 'button'; 
+    eraserButton.value = 'Eraser';
 };
 
 function draw(){
@@ -96,7 +110,10 @@ function draw(){
 
     column.forEach((column) => {
         column.addEventListener("mouseover", () => {
-            if (isMouseDown && rainbowButtonStatus) {
+            if (isMouseDown && eraserButtonStatus) {
+                column.style.background = '';
+            }
+            else if (isMouseDown && rainbowButtonStatus) {
                 activeRainbowColor = randomColor()
                 column.style.background = `rgb(${activeRainbowColor.r},${activeRainbowColor.g},${activeRainbowColor.b})`;
             }
@@ -107,8 +124,10 @@ function draw(){
 
         // Also, retain the click event to paint when clicked
         column.addEventListener("click", () => {
-
-            if (rainbowButtonStatus){
+            if (eraserButtonStatus) {
+                column.style.background = '';
+            }
+            else if (rainbowButtonStatus){
                 activeRainbowColor = randomColor()
                 column.style.background = `rgb(${activeRainbowColor.r},${activeRainbowColor.g},${activeRainbowColor.b})`;
             }
@@ -130,6 +149,7 @@ function colorSelector(){
     colorSelect.type = 'color';
     colorSelect.addEventListener('input', () => {
         rainbowButtonStatus = false;
+        eraserButtonStatus = false;
         activeColor = hexToRgb(colorSelect.value);
     });
 };
@@ -154,14 +174,26 @@ function randomColor(){
 function getRainbowButtonStatus(){
     const rainbowButton = document.querySelector('.rainbowColor');
     rainbowButton.addEventListener("click", () => {
+        eraserButtonStatus = false;
         rainbowButtonStatus = true;
     })
 };
 
-function getClearButtonStatus(){
+function getEraserButtonStatus(){
+    const eraserButton = document.querySelector('.eraser');
+    eraserButton.addEventListener("click", () => {
+        eraserButtonStatus = true;
+    })
+};
+
+function clearButton(){
     const clearButton = document.querySelector('.clearGrid');
     clearButton.addEventListener("click", () => {
-        clearButtonStatus = true;
+        const column = document.querySelectorAll('.column');
+        column.forEach((column) => {
+            eraserButtonStatus = false;
+            column.style.background = '';
+        })
     })
 };
 
