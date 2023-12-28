@@ -13,22 +13,18 @@ const sliderOpacityContainer = document.querySelector('.sliderOpacityContainer')
 const settingsContainer = document.querySelector('.settingsContainer');
 
 drawSlider();
-opacitySlider();
 colorSelector();
 drawRainbowButton();
+drawClearButton();
 let sliderColorText = sliderColorContainer.appendChild(document.createElement('p'));
 sliderColorText.className = 'sliderText';
 getSliderResValue();
 getRainbowButtonStatus();
 
 let activeColor = hexToRgb('#000000');
-let initialBgColor = '';
 let activeRainbowColor = '';
-let opacityValue = 1;
 let rainbowButtonStatus = false;
-let currentBgColor = '';
-let rgbaValues = '';
-let alphavalues = '';
+let clearButtonStatus = false;
 
 
 function drawGrid(pixelSize){
@@ -70,22 +66,18 @@ function drawSlider(){
     slider.addEventListener('input', getSliderResValue);
 };
 
-function opacitySlider() {
-    const slider = sliderOpacityContainer.appendChild(document.createElement('input'));
-    slider.type = 'range';
-    slider.className = 'sliderOpacity';
-    slider.setAttribute('min','10');
-    slider.setAttribute('max','100');
-    slider.setAttribute('value','100');
-    slider.setAttribute('step','10');
-    slider.addEventListener('input', getSliderOpValue);
-}
-
 function drawRainbowButton(){
     const rainbowButton = settingsContainer.appendChild(document.createElement('input'));
     rainbowButton.className = 'rainbowColor';
     rainbowButton.type = 'button'; 
     rainbowButton.value = 'Rainbow Mode';
+};
+
+function drawClearButton(){
+    const rainbowButton = settingsContainer.appendChild(document.createElement('input'));
+    rainbowButton.className = 'clearGrid';
+    rainbowButton.type = 'button'; 
+    rainbowButton.value = 'Clear';
 };
 
 function draw(){
@@ -104,23 +96,12 @@ function draw(){
 
     column.forEach((column) => {
         column.addEventListener("mouseover", () => {
-
-            currentColumn = window.getComputedStyle(column)
-            currentBgColor = currentColumn.backgroundColor;
-            rgbaValues = currentBgColor.match(/[\d.]+/g).map(Number);
-            alphavalues = rgbaValues[3];
-
-            console.log('alpha:', alphavalues)
-            console.log('curr color:', currentBgColor, 'typeof:', typeof(currentBgColor))
-            // console.log(opacityValue);
-            // console.log(currentBgOpacity);
-
             if (isMouseDown && rainbowButtonStatus) {
                 activeRainbowColor = randomColor()
-                column.style.background = `rgba(${activeRainbowColor.r},${activeRainbowColor.g},${activeRainbowColor.b},${opacityValue})`;
+                column.style.background = `rgb(${activeRainbowColor.r},${activeRainbowColor.g},${activeRainbowColor.b})`;
             }
             else if (isMouseDown) {
-                column.style.background = `rgba(${activeColor.r},${activeColor.g},${activeColor.b},${opacityValue})`;
+                column.style.background = `rgb(${activeColor.r},${activeColor.g},${activeColor.b})`;
             }
         });
 
@@ -129,10 +110,10 @@ function draw(){
 
             if (rainbowButtonStatus){
                 activeRainbowColor = randomColor()
-                column.style.background = `rgba(${activeRainbowColor.r},${activeRainbowColor.g},${activeRainbowColor.b},${opacityValue})`;
+                column.style.background = `rgb(${activeRainbowColor.r},${activeRainbowColor.g},${activeRainbowColor.b})`;
             }
             else {
-                column.style.background = `rgba(${activeColor.r},${activeColor.g},${activeColor.b},${opacityValue})`;
+                column.style.background = `rgb(${activeColor.r},${activeColor.g},${activeColor.b})`;
             }
         });
     });
@@ -160,11 +141,6 @@ function getSliderResValue(){
     sliderColorText.textContent = `${512/resolutionValue} x ${512/resolutionValue}`;
 };
 
-function getSliderOpValue(){
-    const slider = document.querySelector('.sliderOpacity');
-    opacityValue = (slider.value)/100;
-};
-
 function randomColor(){
     // const randomColor = Math.floor(Math.random()*16777215).toString(16);
     // return ("#" + randomColor);
@@ -182,9 +158,12 @@ function getRainbowButtonStatus(){
     })
 };
 
-function blend(activeColor,currentBgColor,opacity){
-
-}
+function getClearButtonStatus(){
+    const clearButton = document.querySelector('.clearGrid');
+    clearButton.addEventListener("click", () => {
+        clearButtonStatus = true;
+    })
+};
 
 function hexToRgb(hex) {
     // Remove the hash (#) if present
@@ -200,4 +179,5 @@ function hexToRgb(hex) {
 
     // Return the RGB values as an object
     return { r: r, g: g, b: b }
+    // return[r,g,b]
 }
