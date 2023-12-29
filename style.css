@@ -31,31 +31,6 @@ input[type="color"]:hover{
     cursor: pointer;
 }
 
-.sliderRes {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 125px;
-    height: 25px;
-    background: rgb(214,204,194);
-    outline: none;
-}
-
-.sliderRes::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    background: rgb(0, 0, 0);
-    cursor: pointer;
-}
-
-.sliderRes::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    background: rgb(214,204,194);
-    cursor: pointer;
-}
-
 .column {
     width: 256px;
     height: 256px;
@@ -109,10 +84,37 @@ input[type="color"]:hover{
     margin: 25px;
 }
 
+
+.sliderRes {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 125px;
+    height: 25px;
+    background: rgb(214,204,194);
+    outline: none;
+}
+
+.sliderRes::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: rgb(0, 0, 0);
+    cursor: pointer;
+}
+
+.sliderRes::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: rgb(214,204,194);
+    cursor: pointer;
+}
+
 .sliderText {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 5px;
 }
 
 .title {
