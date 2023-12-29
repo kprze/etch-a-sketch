@@ -68,7 +68,7 @@ function drawGrid(pixelSize){
 function drawSlider(){                  
     const slider = sliderResContainer.appendChild(document.createElement('input'));
     slider.type = 'range';
-    slider.className = 'sliderColor';
+    slider.className = 'sliderRes';
     slider.setAttribute('min','1');
     slider.setAttribute('max','6');
     slider.setAttribute('value','6')
@@ -159,7 +159,7 @@ function colorSelector(){
 };
 
 function getSliderResValue(){
-    const slider = document.querySelector('.sliderColor');
+    const slider = document.querySelector('.sliderRes');
     let resolutionValue = resolution[slider.value];
     setResolution(parseInt(resolutionValue));
     sliderColorText.textContent = `${512/resolutionValue} x ${512/resolutionValue}`;
