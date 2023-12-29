@@ -18,6 +18,7 @@ input[type="button"] {
 
 input[type="button"]:hover{
     cursor: pointer;
+    background-color: rgb(237,237,233)
 }
 
 input[type="color"] {
@@ -28,6 +29,7 @@ input[type="color"] {
 
 input[type="color"]:hover{
     cursor: pointer;
+    background-color: rgb(237,237,233)
 }
 
 .sliderRes {
