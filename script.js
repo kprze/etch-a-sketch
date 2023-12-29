@@ -147,9 +147,11 @@ function colorSelector(){
     const colorSelect = settingsContainer.appendChild(document.createElement('input'));
     colorSelect.className = 'colorSelect';
     colorSelect.type = 'color';
-    colorSelect.addEventListener('input', () => {
+    colorSelect.addEventListener('click', () => {
         rainbowButtonStatus = false;
         eraserButtonStatus = false;
+    })
+    colorSelect.addEventListener('input', () => {
         activeColor = hexToRgb(colorSelect.value);
     });
 };
