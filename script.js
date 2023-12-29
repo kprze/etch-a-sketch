@@ -8,16 +8,19 @@ let resolution = { // Resolution key values to be used in slider input
 };
 
 const gridContainer = document.querySelector('.gridContainer');
-const sliderColorContainer = document.querySelector('.sliderColorContainer');
 const sliderOpacityContainer = document.querySelector('.sliderOpacityContainer');
 const settingsContainer = document.querySelector('.settingsContainer');
 
-drawSlider();
 colorSelector();
 
 drawRainbowButton();
 drawClearButton();
 drawEraserButton();
+
+const sliderColorContainer = settingsContainer.appendChild(document.createElement('div'));
+sliderColorContainer.className = 'sliderContainer';
+
+drawSlider();
 
 let sliderColorText = sliderColorContainer.appendChild(document.createElement('p'));
 sliderColorText.className = 'sliderText';
