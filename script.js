@@ -171,12 +171,10 @@ function getSliderResValue(){
 };
 
 function randomColor(){
-    // const randomColor = Math.floor(Math.random()*16777215).toString(16);
-    // return ("#" + randomColor);
+
     let r = Math.floor(Math.random() * 256);
     let g = Math.floor(Math.random() * 256);
     let b = Math.floor(Math.random() * 256);
-    //return `rgb(${red}, ${green}, ${blue}, ${opacityValue})`;
     return { r: r, g: g, b: b }
 };
 
