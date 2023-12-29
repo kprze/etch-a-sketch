@@ -13,6 +13,11 @@ input[type="button"] {
     border-color: rgb(213, 189, 175);
     font-weight: bold;
     width: 125px;
+    height: 25px;
+}
+
+input[type="button"]:hover{
+    cursor: pointer;
 }
 
 input[type="color"] {
@@ -21,8 +26,33 @@ input[type="color"] {
     height: 125px;
 }
 
-input[type="range"]{
+input[type="color"]:hover{
+    cursor: pointer;
+}
+
+.sliderRes {
+    -webkit-appearance: none;
+    appearance: none;
     width: 125px;
+    height: 25px;
+    background: rgb(214,204,194);
+    outline: none;
+}
+
+.sliderRes::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: rgb(0, 0, 0);
+    cursor: pointer;
+}
+
+.sliderRes::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: rgb(214,204,194);
+    cursor: pointer;
 }
 
 .column {
