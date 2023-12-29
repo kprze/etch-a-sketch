@@ -16,6 +16,9 @@ drawRainbowButton();
 drawClearButton();
 drawEraserButton();
 
+const rainbowButton = document.querySelector('.rainbowColor');
+const eraserButton = document.querySelector('.eraser');
+
 const sliderResContainer = settingsContainer.appendChild(document.createElement('div'));
 sliderResContainer.className = 'sliderContainer';
 
@@ -152,6 +155,8 @@ function colorSelector(){
     colorSelect.addEventListener('click', () => {
         rainbowButtonStatus = false;
         eraserButtonStatus = false;
+        eraserButton.style.background = 'rgb(214,204,194)';
+        rainbowButton.style.background = 'rgb(214,204,194)';
     })
     colorSelect.addEventListener('input', () => {
         activeColor = hexToRgb(colorSelect.value);
@@ -176,17 +181,19 @@ function randomColor(){
 };
 
 function getRainbowButtonStatus(){
-    const rainbowButton = document.querySelector('.rainbowColor');
     rainbowButton.addEventListener("click", () => {
         eraserButtonStatus = false;
         rainbowButtonStatus = true;
+        eraserButton.style.background = 'rgb(214,204,194)';
+        rainbowButton.style.background = 'rgb(237,237,233)';
     })
 };
 
 function getEraserButtonStatus(){
-    const eraserButton = document.querySelector('.eraser');
     eraserButton.addEventListener("click", () => {
         eraserButtonStatus = true;
+        eraserButton.style.background = 'rgb(237,237,233)';
+        rainbowButton.style.background = 'rgb(214,204,194)';
     })
 };
 
@@ -196,6 +203,7 @@ function clearButton(){
         const column = document.querySelectorAll('.column');
         column.forEach((column) => {
             eraserButtonStatus = false;
+            eraserButton.style.background = 'rgb(214,204,194)';
             column.style.background = '';
         })
     })
