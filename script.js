@@ -8,7 +8,6 @@ let resolution = { // Resolution key values to be used in slider input
 };
 
 const gridContainer = document.querySelector('.gridContainer');
-const sliderOpacityContainer = document.querySelector('.sliderOpacityContainer');
 const settingsContainer = document.querySelector('.settingsContainer');
 
 colorSelector();
@@ -17,12 +16,12 @@ drawRainbowButton();
 drawClearButton();
 drawEraserButton();
 
-const sliderColorContainer = settingsContainer.appendChild(document.createElement('div'));
-sliderColorContainer.className = 'sliderContainer';
+const sliderResContainer = settingsContainer.appendChild(document.createElement('div'));
+sliderResContainer.className = 'sliderContainer';
 
 drawSlider();
 
-let sliderColorText = sliderColorContainer.appendChild(document.createElement('p'));
+let sliderColorText = sliderResContainer.appendChild(document.createElement('p'));
 sliderColorText.className = 'sliderText';
 
 getSliderResValue();
@@ -67,7 +66,7 @@ function drawGrid(pixelSize){
 };
 
 function drawSlider(){                  
-    const slider = sliderColorContainer.appendChild(document.createElement('input'));
+    const slider = sliderResContainer.appendChild(document.createElement('input'));
     slider.type = 'range';
     slider.className = 'sliderColor';
     slider.setAttribute('min','1');
